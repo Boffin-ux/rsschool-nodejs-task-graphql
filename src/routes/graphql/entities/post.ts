@@ -5,4 +5,16 @@ interface IPost {
   authorId: string;
 }
 
-export { IPost };
+type CreatePostDTO = Omit<IPost, 'id'>;
+type ChangePostDTO = Omit<CreatePostDTO, 'authorId'>;
+
+interface ICreatePost {
+  dto: CreatePostDTO;
+};
+
+interface IChangePost {
+  id: string;
+  dto: ChangePostDTO;
+};
+
+export { IPost, ICreatePost, IChangePost };

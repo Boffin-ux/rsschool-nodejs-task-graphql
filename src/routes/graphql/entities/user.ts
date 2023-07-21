@@ -6,7 +6,26 @@ interface IUser {
   name: string;
   balance: number;
   profile: IProfile;
-  posts: IPost[]; 
+  posts: IPost[];
+  userSubscribedTo: string[];
+  subscribedToUser: string[];
 }
 
-export { IUser };
+interface ISubscribe {
+  userId: string,
+  authorId: string,
+}
+
+type CreateUserDTO = Pick<IUser, 'name' | 'balance'>;
+type ChangeUserDTO = Pick<IUser, 'name'>;
+
+interface ICreateUser {
+  dto: CreateUserDTO;
+};
+
+interface IChangeUser {
+  id: string;
+  dto: ChangeUserDTO;
+};
+
+export { IUser, ICreateUser, IChangeUser, ISubscribe};

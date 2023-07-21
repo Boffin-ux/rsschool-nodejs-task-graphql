@@ -1,7 +1,7 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import { createGqlResponseSchema, gqlResponseSchema } from './schemas.js';
 import { graphql } from 'graphql';
-import { Schema } from './queries/root.js';
+import { Schema } from './resolvers/root.js';
 
 const schema = new Schema();
 

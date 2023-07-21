@@ -1,4 +1,4 @@
-import { GraphQLNonNull, GraphQLObjectType, GraphQLSchema } from 'graphql';
+import { GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { UserListType, UserType } from '../types/user.js';
 import { MemberListType, MemberType, MemberTypeEnum } from '../types/member.js';
 import { PostListType, PostType } from '../types/post.js';
@@ -10,7 +10,7 @@ import { IPost } from '../entities/post.js';
 import { IUser } from '../entities/user.js';
 import { IMemberType } from '../entities/member.js';
 
-const RootQuery = new GraphQLObjectType({
+export const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: () => ({
     memberTypes: {
@@ -80,14 +80,8 @@ const RootQuery = new GraphQLObjectType({
         return profile ? profile : null;
       }
     },
-
   }),
 });
 
-export class Schema extends GraphQLSchema {
-  constructor() {
-    super({
-      query: RootQuery,
-    });
-  }
-};
+
+

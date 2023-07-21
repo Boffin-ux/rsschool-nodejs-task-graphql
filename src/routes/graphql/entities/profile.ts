@@ -9,4 +9,16 @@ interface IProfile {
   memberType: IMemberType;
 }
 
-export { IProfile };
+type CreateProfileDTO = Omit<IProfile, 'id' | 'memberType'>;
+type ChangeProfileDTO = Pick<IProfile, 'isMale' | 'yearOfBirth'>;
+
+interface ICreateProfile {
+  dto: CreateProfileDTO;
+};
+
+interface IChangeProfile {
+  id: string;
+  dto: ChangeProfileDTO;
+};
+
+export { IProfile, ICreateProfile, IChangeProfile };

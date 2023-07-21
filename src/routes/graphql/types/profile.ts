@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLBoolean, GraphQLInt, GraphQLList, GraphQLNonNull } from 'graphql';
+import { GraphQLObjectType, GraphQLBoolean, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLInputObjectType } from 'graphql';
 import { UUIDType } from './uuid.js';
 import { MemberType, MemberTypeEnum } from './member.js';
 import { PrismaClient } from '@prisma/client';
@@ -21,6 +21,24 @@ const ProfileType = new GraphQLObjectType({
   }),
 });
 
+const CreateProfileInputType = new GraphQLInputObjectType({
+  name: 'CreateProfileInput',
+  fields: () => ({
+    isMale: {type: GraphQLBoolean},
+    yearOfBirth: {type: GraphQLInt},
+    userId: {type: new GraphQLNonNull(UUIDType)},
+    memberTypeId: {type: new GraphQLNonNull(MemberTypeEnum)},
+  }),
+});
+
+const ChangeProfileInputType = new GraphQLInputObjectType({
+  name: 'ChangeProfileInput',
+  fields: () => ({
+    isMale: {type: GraphQLBoolean},
+    yearOfBirth: {type: GraphQLInt},
+  }),
+});
+
 const ProfileListType = new GraphQLList(new GraphQLNonNull(ProfileType));
 
-export { ProfileType, ProfileListType };
+export { ProfileType, ProfileListType, CreateProfileInputType, ChangeProfileInputType };

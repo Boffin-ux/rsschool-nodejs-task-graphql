@@ -1,4 +1,4 @@
-import { GraphQLFloat, GraphQLList, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
+import { GraphQLFloat, GraphQLInputObjectType, GraphQLList, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { UUIDType } from './uuid.js';
 import { ProfileType } from './profile.js';
 import { PostListType } from './post.js';
@@ -25,7 +25,7 @@ const UserType = new GraphQLObjectType({
     },
     userSubscribedTo: {
       type: new GraphQLList(new GraphQLNonNull(UserType)),
-      resolve: async ({ id }, _args, prisma: PrismaClient) => {
+      resolve: async ({ id }: IUser, _args, prisma: PrismaClient) => {
         return await prisma.user.findMany({ 
           where: { 
             subscribedToUser: { 
@@ -38,8 +38,8 @@ const UserType = new GraphQLObjectType({
       }
     },
     subscribedToUser: {
-      type: UserListType,
-      resolve: async ({ id }, _args, prisma: PrismaClient) => {
+      type: new GraphQLList(new GraphQLNonNull(UserType)),
+      resolve: async ({ id }: IUser, _args, prisma: PrismaClient) => {
         return await prisma.user.findMany({ 
           where: { 
             userSubscribedTo: { 
@@ -54,6 +54,21 @@ const UserType = new GraphQLObjectType({
   }),
 });
 
+const CreateUserInputType = new GraphQLInputObjectType({
+  name: 'CreateUserInput',
+  fields: () => ({
+    name: { type: new GraphQLNonNull(GraphQLString) },
+    balance: { type: new GraphQLNonNull(GraphQLFloat) },
+  }),
+});
+
+const ChangeUserInputType = new GraphQLInputObjectType({
+  name: 'ChangeUserInput',
+  fields: () => ({
+    name: { type: new GraphQLNonNull(GraphQLString) },
+  }),
+});
+
 const UserListType = new GraphQLList(new GraphQLNonNull(UserType));
 
-export { UserType, UserListType };
+export { UserType, UserListType, CreateUserInputType, ChangeUserInputType };
