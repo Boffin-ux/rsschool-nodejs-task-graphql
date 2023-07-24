@@ -26,15 +26,15 @@ const UserType = new GraphQLObjectType({
     },
     userSubscribedTo: {
       type: new GraphQLList(new GraphQLNonNull(UserType)),
-      resolve: async ({ id }: IUser, _, { userSubscribedToLoader }: IContext) => {
-        const subs = await userSubscribedToLoader.load(id);
+      resolve: async ({ id }: IUser, _, { subscribedToLoader }: IContext) => {
+        const subs = await subscribedToLoader.load(id);
         return subs ? [subs] : [];
       }
     },
     subscribedToUser: {
       type: new GraphQLList(new GraphQLNonNull(UserType)),
-      resolve: async ({ id }: IUser, _, { userSubscribersLoader }: IContext) => {
-        const subs = await userSubscribersLoader.load(id);
+      resolve: async ({ id }: IUser, _, { subscribersLoader }: IContext) => {
+        const subs = await subscribersLoader.load(id);
         return subs ? [subs] : [];
       }
     }
