@@ -1,3 +1,4 @@
+import { SubscribersOnAuthors } from "@prisma/client";
 import { IPost } from "./post.js";
 import { IProfile } from "./profile.js";
 
@@ -7,8 +8,8 @@ interface IUser {
   balance: number;
   profile: IProfile;
   posts: IPost[];
-  userSubscribedTo: string[];
-  subscribedToUser: string[];
+  userSubscribedTo: SubscribersOnAuthors[];
+  subscribedToUser: SubscribersOnAuthors[];
 }
 
 interface ISubscribe {
